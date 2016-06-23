@@ -1,5 +1,6 @@
 package com.diploma.jk.diploma;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
 
     Sensor accelerometer;
+    Sensor orientation;
     SensorManager sm;
     TextView acceleration;
 
@@ -30,9 +32,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), SeznamSenzorjev.class);
+                startActivity(intent);
             }
         });
 
@@ -40,12 +43,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //ACCELEROMETER TEST
         sm = (SensorManager)getSystemService(SENSOR_SERVICE);
         accelerometer = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sm.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        orientation = sm.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 
+        sm.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sm.registerListener(this, orientation, SensorManager.SENSOR_DELAY_NORMAL);
 
         acceleration = (TextView)findViewById(R.id.acceleration);
+        orientation = (TextView)findViewById(R.id.sensorList);
 
     }
+
 
     //DODANA METODA PRI TESTIRANJU ACCELEROMETRA
     @Override
