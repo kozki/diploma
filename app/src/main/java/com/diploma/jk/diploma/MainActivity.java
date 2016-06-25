@@ -6,6 +6,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +16,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
+
+
 
     Sensor accelerometer;
     Sensor orientation;
     SensorManager sm;
     TextView acceleration;
+    TextView orientationText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void onClick(View v) {
 
                 Intent intent = new Intent(getApplicationContext(), SeznamSenzorjev.class);
+                //Intent intent = new Intent(getApplicationContext(), InVehicle.class);
                 startActivity(intent);
             }
         });
@@ -49,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sm.registerListener(this, orientation, SensorManager.SENSOR_DELAY_NORMAL);
 
         acceleration = (TextView)findViewById(R.id.acceleration);
-        orientation = (TextView)findViewById(R.id.sensorList);
+        orientationText = (TextView)findViewById(R.id.orientationText);
 
     }
 
@@ -60,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         acceleration.setText("X: "+sensorEvent.values[0]+
                             "\nY: "+sensorEvent.values[1]+
                             "\nZ: "+sensorEvent.values[2]);
+
+        orientationText.setText("X: "+sensorEvent.values[1]);
     }
 
 
